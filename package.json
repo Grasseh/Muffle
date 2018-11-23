@@ -1,0 +1,11 @@
+{
+    "name": "NE-Gag",
+    "version": "0.0.1",
+    "description": "Gag your friends!",
+    "main": "bot.js",
+    "author": "Steve Gagné",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "winston": "^3.1.0"
+    }
+}
