@@ -67,13 +67,13 @@ function gagSomeone(gaggedList, channel, args){
     channel.send(`User gagged: ${gaggedUser.name} !`);
 }
 
-function ungagSomeone(gaggedList, channel, args){
+function ungagSomeone(list, channel, args){
     let ungaggedUser = args[0];
-    if(!userIsGagged(ungaggedUser, gaggedList, channel.id)){
+    if(!userIsGagged(ungaggedUser, list, channel.id)){
         channel.send(`User ${ungaggedUser} is not currently gagged!`);
         return;
     }
-    gaggedList = removeFromList(ungaggedUser, gaggedList);
+    gaggedList = removeFromList(ungaggedUser, list, channel.id);
     channel.send(`User ungagged: ${ungaggedUser} !`);
 }
 
@@ -97,8 +97,8 @@ function gagMessage(user, msg, message, channel){
     //msg.edit('Message from ${user}: ${gaggedMessage}.`);
 }
 
-function removeFromList(user, list){
-    return list.filter(x => x.name !== user);
+function removeFromList(user, list, channel){
+    return list.filter(x => !(x.name === user && x.channel === channel));
 }
 
 function convertToGagType(message, _user){
