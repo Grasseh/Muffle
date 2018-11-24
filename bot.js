@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const logger = require('winston');
 const auth = require('./auth.json');
+const User = require('./user');
 const prototypeGag = require('./gags/prototypeGag');
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -50,38 +51,40 @@ bot.on('message', msg => {
         }
         return;
     }
-    if(userIsGagged(user.username, gaggedList)){
+    if(userIsGagged(user.username, gaggedList, channel.id)){
         gagMessage(user.username, msg, message, channel);
     }
 });
 
 function gagSomeone(gaggedList, channel, args){
-    let gaggedUser = args[0];
-    if(userIsGagged(gaggedUser, gaggedList)){
-        channel.send(`User ${gaggedUser} is already gagged!`);
+    let gaggedUser = new User(args[0], args[1], channel.id);
+
+    if(userIsGagged(gaggedUser, gaggedList, channel.id)){
+        channel.send(`User ${gaggedUser.name} is already gagged!`);
         return;
     }
     gaggedList.push(gaggedUser);
-    channel.send(`User gagged: ${gaggedUser} !`);
+    channel.send(`User gagged: ${gaggedUser.name} !`);
 }
 
 function ungagSomeone(gaggedList, channel, args){
     let ungaggedUser = args[0];
-    if(!userIsGagged(ungaggedUser, gaggedList)){
+    if(!userIsGagged(ungaggedUser, gaggedList, channel.id)){
         channel.send(`User ${ungaggedUser} is not currently gagged!`);
         return;
     }
-    gaggedList.splice(gaggedList.indexOf(ungaggedUser), 1 );
+    gaggedList = removeFromList(ungaggedUser, gaggedList);
     channel.send(`User ungagged: ${ungaggedUser} !`);
 }
 
 function listGaggedUsers(gaggedList, channel){
-    channel.send(`List of gagged users: ${gaggedList} !`);
+    let channelGaggedList = gaggedList.filter(x => x.channel === channel.id).map(x => x.name);
+    channel.send(`List of gagged users: ${channelGaggedList} !`);
 }
 
-function userIsGagged(gaggedUser, gaggedList){
-    let index = gaggedList.indexOf(gaggedUser);
-    return index !== -1;
+function userIsGagged(gaggedUser, gaggedList, channel){
+    let count = gaggedList.filter(x => x.name === gaggedUser && x.channel === channel).length;
+    return count !== 0;
 }
 
 function gagMessage(user, msg, message, channel){
@@ -92,6 +95,10 @@ function gagMessage(user, msg, message, channel){
     channel.send(`Message from ${user}:\n ${gaggedMessage}.`);
     //If Discord ever allows to edit a user's message
     //msg.edit('Message from ${user}: ${gaggedMessage}.`);
+}
+
+function removeFromList(user, list){
+    return list.filter(x => x.name !== user);
 }
 
 function convertToGagType(message, _user){
