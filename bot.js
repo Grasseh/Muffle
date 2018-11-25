@@ -39,7 +39,6 @@ bot.on('message', msg => {
 
         args = args.splice(1);
         switch(cmd.toLowerCase()) {
-        // !ping
         case 'gag':
             gagSomeone(gaggedList, channel, args);
             break;
@@ -62,10 +61,13 @@ bot.on('message', msg => {
 });
 
 function gagSomeone(gaggedList, channel, args){
-    if(args.length < 2){
-        args[1] = 'default';
+    let gagType = 'default';
+    let userName = args[0];
+    if(args.length >= 2){
+        gagType = args[args.length - 1];
+        userName = args.splice(0, args.length - 1).join(' ');
     }
-    let gaggedUser = new User(args[0], args[1], channel.id);
+    let gaggedUser = new User(userName, gagType, channel.id);
 
     if(userIsGagged(gaggedUser, gaggedList, channel.id)){
         channel.send(`User ${gaggedUser.name} is already gagged!`);
@@ -126,16 +128,18 @@ function convertToGagType(message, user, channel){
 
 function help(channel){
     channel.send(`List of available commands : \n
-                    !gag DiscordUserName nameofthegag -- gags that user in the current channel.\n
+                    \`!gag DiscordUserName nameofthegag\` -- gags that user in the current channel.\n
                     List of available gags : ${Object.keys(gagList)}\n
-                    !ungag DiscordUserName -- ungag that user in the current channel\n
-                    !gaghelp -- Display this message\n
-                    !gaglist -- List the users and their gags in the current channel\n
+                    \`!ungag DiscordUserName\` -- ungag that user in the current channel\n
+                    \`!gaghelp\` -- Display this message\n
+                    \`!gaglist\` -- List the users and their gags in the current channel\n
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
 Their text between {} becomes gagged.
 
 Note that DiscordUserName needs to be the name of the account without the ID and ignoring nicknames.
 For example, if my account is MuffleMan#1234 and my nickname on a server is GagMe, then the command to
 gag my account would be \`!gag MuffleMan default\`
+
+Note : the nameofthegag parameter is optional UNLESS you have a space in your Discord username.
                     `);
 }
