@@ -6,9 +6,8 @@ const prototypeGag = require('./gags/prototypeGag');
 //const ballGag = require('./gags/ballGag');
 // Configure logger settings
 logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
+logger.add(new logger.transports.File({ filename: 'tmp/error.log', level: 'error' }));
+logger.add(new logger.transports.File({ filename: 'tmp/combined.log' }));
 logger.level = 'debug';
 // Initialize Discord Bot
 const bot = new Discord.Client();
