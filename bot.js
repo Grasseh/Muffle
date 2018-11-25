@@ -133,5 +133,9 @@ function help(channel){
                     !gaglist -- List the users and their gags in the current channel\n
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
 Their text between {} becomes gagged.
+
+Note that DiscordUserName needs to be the name of the account without the ID and ignoring nicknames.
+For example, if my account is MuffleMan#1234 and my nickname on a server is GagMe, then the command to
+gag my account would be \`!gag MuffleMan default\`
                     `);
 }
