@@ -3,7 +3,7 @@ const logger = require('winston');
 const auth = require('./auth.json');
 const User = require('./user');
 const prototypeGag = require('./gags/prototypeGag');
-const ballGag = require('./gags/ballGag');
+//const ballGag = require('./gags/ballGag');
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -22,8 +22,8 @@ bot.on('ready', function (_evt) {
 let gaggedList = [];
 let gagList = {
     'proto' : prototypeGag,
-    'ballgag' : ballGag,
-    'ball' : ballGag,
+    //    'ballgag' : ballGag,
+    //    'ball' : ballGag,
     'default' : prototypeGag
 };
 bot.on('message', msg => {

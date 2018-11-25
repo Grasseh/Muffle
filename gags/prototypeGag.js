@@ -18,17 +18,52 @@ function prototypeGag(message){
             continue;
         }
         if(lastSpace){
-            gaggedMessage += message[i];
+            if(message[i] === 'i'){
+                gaggedMessage += 'hm';
+                continue;
+            }
+            if(message[i] === 'I'){
+                gaggedMessage += 'HM';
+                continue;
+            }
             lastSpace = false;
-            continue;
         }
-        if (inGag){
-            gaggedMessage += 'm';
+        if (inGag && dictKeys.includes(message[i])){
+            gaggedMessage += dictionary[message[i]];
             continue;
         }
         gaggedMessage += message[i];
     }
     return gaggedMessage;
 }
+
+//Replace A, O and U with H
+//Replace C and K with G
+//Replace E with M
+//Replace I with Hm if it starts a word, with N if it does not
+//Replace S with F
+//Replace Y with N
+let dictionary = {
+    a : 'h',
+    o : 'h',
+    u : 'h',
+    c : 'g',
+    k : 'g',
+    e : 'm',
+    i : 'n',
+    s : 'f',
+    y : 'n',
+    A : 'H',
+    O : 'H',
+    U : 'H',
+    C : 'G',
+    K : 'G',
+    E : 'M',
+    I : 'N',
+    S : 'F',
+    Y : 'N',
+};
+
+let dictKeys = Object.keys(dictionary);
 
 module.exports = prototypeGag;
