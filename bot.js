@@ -1,14 +1,10 @@
 const Discord = require('discord.js');
-const logger = require('winston');
 const auth = require('./auth.json');
 const User = require('./user');
+const setupLogger = require('./logger');
 const prototypeGag = require('./gags/prototypeGag');
 //const ballGag = require('./gags/ballGag');
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.File({ filename: 'tmp/error.log', level: 'error' }));
-logger.add(new logger.transports.File({ filename: 'tmp/combined.log' }));
-logger.level = 'debug';
+const logger = setupLogger();
 // Initialize Discord Bot
 const bot = new Discord.Client();
 
