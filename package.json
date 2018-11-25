@@ -1,6 +1,6 @@
 {
     "name": "NE-Gag",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Gag your friends!",
     "main": "bot.js",
     "author": "Steve Gagné",
