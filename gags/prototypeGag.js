@@ -18,11 +18,11 @@ function prototypeGag(message){
             continue;
         }
         if(lastSpace){
-            if(message[i] === 'i'){
+            if(inGag && message[i] === 'i'){
                 gaggedMessage += 'hm';
                 continue;
             }
-            if(message[i] === 'I'){
+            if(inGag && message[i] === 'I'){
                 gaggedMessage += 'HM';
                 continue;
             }
