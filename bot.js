@@ -78,7 +78,7 @@ function gagSomeone(gaggedList, channel, args){
 }
 
 function ungagSomeone(list, channel, args){
-    let ungaggedUser = args[0];
+    let ungaggedUser = args.join(' ');
     if(!userIsGagged(ungaggedUser, list, channel.id)){
         channel.send(`User ${ungaggedUser} is not currently gagged!`);
         return;
