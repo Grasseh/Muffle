@@ -4,7 +4,7 @@ const User = require('./user');
 const setupLogger = require('./logger');
 const prototypeGag = require('./gags/prototypeGag');
 //const ballGag = require('./gags/ballGag');
-const logger = setupLogger();
+const logger = setupLogger(auth.dev);
 // Initialize Discord Bot
 const bot = new Discord.Client();
 
@@ -54,8 +54,8 @@ bot.on('message', msg => {
         }
         return;
     }
-    if(userIsGagged(`<@${user.id}>`, gaggedList, channel.id)){
-        gagMessage(`<@${user.id}>`, msg, message, channel);
+    if(userIsGagged(`<@!${user.id}>`, gaggedList, channel.id)){
+        gagMessage(`<@!${user.id}>`, msg, message, channel);
     }
 });
 
@@ -100,7 +100,7 @@ function gagMessage(user, msg, message, channel){
         return;
     }
     msg.delete().catch(_err => {
-        console.log(`${msg.guild.name} ${msg.guild.id} GAGGED`);
+        logger.info(`${msg.guild.name} ${msg.guild.id} GAGGED`);
     });
     let gaggedMessage = convertToGagType(message, user, channel.id);
     channel.send(`Message from ${user}:\n ${gaggedMessage}.`);
