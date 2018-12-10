@@ -54,8 +54,8 @@ bot.on('message', msg => {
         }
         return;
     }
-    if(userIsGagged(`<@!${user.id}>`, gaggedList, channel.id)){
-        gagMessage(`<@!${user.id}>`, msg, message, channel);
+    if(userIsGagged(`<@${user.id}>`, gaggedList, channel.id)){
+        gagMessage(`<@${user.id}>`, msg, message, channel);
     }
 });
 
@@ -65,6 +65,7 @@ function gagSomeone(gaggedList, channel, args){
     if(args.length >= 2){
         gagType = args[1];
     }
+    userName = userName.replace('!','');
     let gaggedUser = new User(userName, gagType, channel.id);
 
     if(userIsGagged(userName, gaggedList, channel.id)){
