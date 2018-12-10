@@ -144,6 +144,6 @@ function help(channel){
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
 Their text between {} becomes gagged.
 
-Note : the nameofthegag parameter is optional UNLESS you have a space in your Discord username.
+Note : the nameofthegag parameter is optional 
                     `);
 }
