@@ -55,7 +55,7 @@ bot.on('message', msg => {
         return;
     }
     if(userIsGagged(`<@${user.id}>`, gaggedList, channel.id)){
-        gagMessage(`<@${user.id}>`, msg, message, channel);
+        gagMessage(`<@${user.id}>`, msg, message, channel, user.id);
     }
 });
 
@@ -78,6 +78,7 @@ function gagSomeone(gaggedList, channel, args){
 
 function ungagSomeone(list, channel, args){
     let ungaggedUser = args.join(' ');
+    ungaggedUser = ungaggedUser.replace('!','');
     if(!userIsGagged(ungaggedUser, list, channel.id)){
         channel.send(`User ${ungaggedUser} is not currently gagged!`);
         return;
@@ -96,7 +97,7 @@ function userIsGagged(gaggedUser, gaggedList, channel){
     return count !== 0;
 }
 
-function gagMessage(user, msg, message, channel){
+async function gagMessage(user, msg, message, channel, userId){
     if(message.indexOf('{') === -1){
         return;
     }
@@ -104,9 +105,16 @@ function gagMessage(user, msg, message, channel){
         logger.info(`${msg.guild.name} ${msg.guild.id} GAGGED`);
     });
     let gaggedMessage = convertToGagType(message, user, channel.id);
-    channel.send(`Message from ${user}:\n ${gaggedMessage}.`);
-    //If Discord ever allows to edit a user's message
-    //msg.edit('Message from ${user}: ${gaggedMessage}.`);
+    let embed = await buildGagEmbed(user, gaggedMessage, userId);
+    channel.send(embed);
+}
+
+async function buildGagEmbed(user, gaggedMessage, userId){
+    let discord_user = await bot.fetchUser(userId.replace('!', ''));
+    return new Discord.RichEmbed()
+        .setAuthor(discord_user.tag, discord_user.displayAvatarURL)
+        .setColor(0x8af7bd)
+        .setDescription(gaggedMessage);
 }
 
 function removeFromList(user, list, channel){
