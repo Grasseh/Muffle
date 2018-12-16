@@ -1,15 +1,11 @@
 function prototypeGag(message){
-    let inGag = false;
+    let inGag = true;
     let lastSpace = false;
     let gaggedMessage = '';
     for (let i = 0; i < message.length; i++){
-        if (message[i] === '{'){
-            inGag = true;
-            lastSpace = true;
-            continue;
-        }
-        if (message[i] === '}'){
-            inGag = false;
+        if (message[i] === '*'){
+            inGag = !inGag;
+            gaggedMessage += '*';
             continue;
         }
         if(message[i] === ' '){
@@ -23,7 +19,7 @@ function prototypeGag(message){
                 continue;
             }
             if(inGag && message[i] === 'I'){
-                gaggedMessage += 'HM';
+                gaggedMessage += 'Hm';
                 continue;
             }
             lastSpace = false;

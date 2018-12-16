@@ -34,7 +34,7 @@ bot.on('message', msg => {
     logger.info(channel.id);
     logger.info(guild.id);
     if (isCommand(message)) {
-        var args = message.substring(1 + (auth.dev ? 1 : 0)).split(' ');
+        var args = message.substring(1).split(' ');
         var cmd = args[0];
 
         args = args.splice(1);
@@ -54,6 +54,7 @@ bot.on('message', msg => {
         }
         return;
     }
+    if(isAlwaysCommand(message))return;
     if(userIsGagged(`<@${user.id}>`, gaggedList, channel.id)){
         gagMessage(`<@${user.id}>`, msg, message, channel, user.id);
     }
@@ -73,7 +74,11 @@ function gagSomeone(gaggedList, channel, args){
         return;
     }
     gaggedList.push(gaggedUser);
-    channel.send(`User gagged: ${gaggedUser.name} !`);
+    let embed = new Discord.RichEmbed()
+        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
+        .setColor(0xffffff)
+        .setDescription(`User gagged: ${gaggedUser.name} !`);
+    channel.send(embed);
 }
 
 function ungagSomeone(list, channel, args){
@@ -84,12 +89,21 @@ function ungagSomeone(list, channel, args){
         return;
     }
     gaggedList = removeFromList(ungaggedUser, list, channel.id);
-    channel.send(`User ungagged: ${ungaggedUser} !`);
+    let embed = new Discord.RichEmbed()
+        .setAuthor('Muffle Ungag!', bot.user.displayAvatarURL)
+        .setColor(0xffffff)
+        .setDescription(`User ungagged: ${ungaggedUser} !`);
+    channel.send(embed);
 }
 
 function listGaggedUsers(gaggedList, channel){
     let channelGaggedList = gaggedList.filter(x => x.channel === channel.id).map(x => `${x.name} - ${x.gag}`);
-    channel.send(`List of gagged users: ${channelGaggedList} !`);
+    channelGaggedList.push('\u200B');
+    let embed = new Discord.RichEmbed()
+        .setAuthor('Muffle Gag List!', bot.user.displayAvatarURL)
+        .setColor(0xffffff)
+        .addField('Gagged Users in this channel', channelGaggedList.join('\n'));
+    channel.send(embed);
 }
 
 function userIsGagged(gaggedUser, gaggedList, channel){
@@ -98,9 +112,6 @@ function userIsGagged(gaggedUser, gaggedList, channel){
 }
 
 async function gagMessage(user, msg, message, channel, userId){
-    if(message.indexOf('{') === -1){
-        return;
-    }
     msg.delete().catch(_err => {
         logger.info(`${msg.guild.name} ${msg.guild.id} GAGGED`);
     });
@@ -134,24 +145,34 @@ function convertToGagType(message, user, channel){
 }
 
 function isCommand(message){
+    let prefix = message.substring(0, 1);
     if(auth.dev){
-        return message.substring(0, 2) === '!d';
+        return prefix === '$';
     }
-    return message.substring(0, 1) === '!';
+    return prefix === '!';
 
 }
 
+function isAlwaysCommand(message){
+    let prefix = message.substring(0, 1);
+    return prefix === '$'|| prefix === '!';
+}
+
 function help(channel){
-    channel.send(`List of available commands : \n
-                    \`!gag @DiscordUserName nameofthegag\` -- gags that user in the current channel.\n
-                    List of available gags : ${Object.keys(gagList)}\n
-                    \`!ungag @DiscordUserName\` -- ungag that user in the current channel\n
-                    \`!gaghelp\` -- Display this message\n
-                    \`!gaglist\` -- List the users and their gags in the current channel\n
-
+    let embed = new Discord.RichEmbed()
+        .setAuthor('Muffle Help!', bot.user.displayAvatarURL)
+        .setColor(0xffffff)
+        .setDescription('List of avalaible commands')
+        .addField('`!gag <@DiscordUserName> [gagType]`', `Gags the user in the current channel with the provided gagType. \n List of available gagType : ${Object.keys(gagList)}`)
+        .addField('`!ungag <@DiscordUserName>`', 'Ungags the user in the current channel.')
+        .addField('`!gaghelp`', 'Display this message.')
+        .addField('`!gaglist`', 'Obtain a list of currently gagged users in this channel.')
+        .addField('Additional Information:', `
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
-Their text between {} becomes gagged.
+Only their commands(messages starting by \`!\`) are not intercepted.
+Descriptions (in italics, between \`* *\`) do not get muffled.
 
-Note : the nameofthegag parameter is optional 
-                    `);
+For commands, parameters between \`<>\` are mandatory, while those between \`[]\` are optional.
+`);
+    channel.send(embed);
 }
