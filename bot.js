@@ -171,6 +171,7 @@ function help(channel){
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
 Only their commands(messages starting by \`!\`) are not intercepted.
 Descriptions (in italics, between \`* *\`) do not get muffled.
+Out Of Character (between parentheses, \`()\`) do not get muffled. Make sure to double check your parentheses match correctly~
 
 For commands, parameters between \`<>\` are mandatory, while those between \`[]\` are optional.
 `);
