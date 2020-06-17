@@ -146,11 +146,7 @@ function convertToGagType(message, user, channel){
 
 function isCommand(message){
     let prefix = message.substring(0, 1);
-    if(auth.dev){
-        return prefix === '$';
-    }
-    return prefix === '!';
-
+    return prefix === '$';
 }
 
 function isAlwaysCommand(message){
@@ -163,10 +159,10 @@ function help(channel){
         .setAuthor('Muffle Help!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
         .setDescription('List of avalaible commands')
-        .addField('`!gag <@DiscordUserName> [gagType]`', `Gags the user in the current channel with the provided gagType. \n List of available gagType : ${Object.keys(gagList)}`)
-        .addField('`!ungag <@DiscordUserName>`', 'Ungags the user in the current channel.')
-        .addField('`!gaghelp`', 'Display this message.')
-        .addField('`!gaglist`', 'Obtain a list of currently gagged users in this channel.')
+        .addField('`$gag <@DiscordUserName> [gagType]`', `Gags the user in the current channel with the provided gagType. \n List of available gagType : ${Object.keys(gagList)}`)
+        .addField('`$ungag <@DiscordUserName>`', 'Ungags the user in the current channel.')
+        .addField('`$gaghelp`', 'Display this message.')
+        .addField('`$gaglist`', 'Obtain a list of currently gagged users in this channel.')
         .addField('Additional Information:', `
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
 Only their commands(messages starting by \`!\`) are not intercepted.
