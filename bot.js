@@ -165,7 +165,7 @@ function help(channel){
         .addField('`$gaglist`', 'Obtain a list of currently gagged users in this channel.')
         .addField('Additional Information:', `
 When someone is gagged all of the messages they post in the channel are intercepted by this bot.
-Only their commands(messages starting by \`!\`) are not intercepted.
+Only their commands(messages starting by \`$\`) are not intercepted.
 Descriptions (in italics, between \`* *\`) do not get muffled.
 Out Of Character (between parentheses, \`()\`) do not get muffled. Make sure to double check your parentheses match correctly~
 
