@@ -4,7 +4,7 @@ function prototypeGag(message){
     let lastSpace = true;
     let gaggedMessage = '';
     for (let i = 0; i < message.length; i++){
-        if (message[i] === '*'){
+        if (message[i] === '*' || message[i] === '_'){
             inDescription = !inDescription;
             gaggedMessage += '*';
             continue;
