@@ -146,6 +146,10 @@ function convertToGagType(message, user, channel){
 
 function isCommand(message){
     let prefix = message.substring(0, 1);
+
+    if(auth.dev){
+        return prefix === '!';
+    }
     return prefix === '$';
 }
 
