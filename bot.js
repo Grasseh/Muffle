@@ -63,17 +63,26 @@ bot.on('message', msg => {
 function gagSomeone(gaggedList, channel, args){
     let gagType = 'default';
     let userName = args[0];
+
     if(args.length >= 2){
         gagType = args[1];
     }
+
     userName = userName.replace('!','');
     let gaggedUser = new User(userName, gagType, channel.id);
 
     if(userIsGagged(userName, gaggedList, channel.id)){
-        channel.send(`User ${gaggedUser.name} is already gagged!`);
+        sendErrorEmbed(`User ${gaggedUser.name} is already gagged!`, channel);
         return;
     }
+
+    if(userName == `<@${bot.user.id}>`){
+        sendErrorEmbed(`Cannot gag Muffle-bot!`, channel);
+        return;
+    }
+
     gaggedList.push(gaggedUser);
+
     let embed = new Discord.RichEmbed()
         .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
@@ -85,7 +94,7 @@ function ungagSomeone(list, channel, args){
     let ungaggedUser = args.join(' ');
     ungaggedUser = ungaggedUser.replace('!','');
     if(!userIsGagged(ungaggedUser, list, channel.id)){
-        channel.send(`User ${ungaggedUser} is not currently gagged!`);
+        sendErrorEmbed(`User ${ungaggedUser} is not currently gagged!`, channel);
         return;
     }
     gaggedList = removeFromList(ungaggedUser, list, channel.id);
@@ -130,6 +139,14 @@ async function buildGagEmbed(user, gaggedMessage, userId){
 
 function removeFromList(user, list, channel){
     return list.filter(x => !(x.name === user && x.channel === channel));
+}
+
+function sendErrorEmbed(message, channel){
+    let embed = new Discord.RichEmbed()
+        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
+        .setColor(0xaa0000)
+        .setDescription(`Error: ${message}!`);
+    channel.send(embed);
 }
 
 function convertToGagType(message, user, channel){
