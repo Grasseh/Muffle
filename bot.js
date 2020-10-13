@@ -2,8 +2,9 @@ const Discord = require('discord.js');
 const auth = require('./auth.json');
 const User = require('./user');
 const setupLogger = require('./logger');
-const prototypeGag = require('./gags/prototypeGag');
-//const ballGag = require('./gags/ballGag');
+// const prototypeGag = require('./gags/prototypeGag');
+const ballGag = require('./gags/prototypeGag');
+const lilGag = require('./gags/lils');
 const logger = setupLogger(auth.dev);
 // Initialize Discord Bot
 const bot = new Discord.Client();
@@ -16,10 +17,11 @@ bot.on('ready', function (_evt) {
 });
 let gaggedList = [];
 let gagList = {
-    'proto' : prototypeGag,
+    // 'proto' : prototypeGag,
     //    'ballgag' : ballGag,
-    //    'ball' : ballGag,
-    'default' : prototypeGag
+    'ball': ballGag,
+    'lil': lilGag,
+    'default' : ballGag
 };
 bot.on('message', msg => {
     // Our bot needs to know if it will execute a command
