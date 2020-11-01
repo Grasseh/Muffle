@@ -34,41 +34,41 @@ function muzzleGag(message){
         if (i < message.length - 1){
             nextTwo = message[i] + message [i + 1];
         }
-        if (inGag && dictTwoKeys.includes(nextTwo)){
-            gaggedMessage += twoDictionary[nextTwo];
-            i += twoDictionary[nextTwo].length;
+        if (inGag && dictTwoKeys.includes(nextTwo.toLowerCase())){
+            gaggedMessage += twoDictionary[nextTwo.toLowerCase()];
+            i += 2;
             continue;
         }
-        if (inGag && dictOneKeys.includes(message[i])){
-            gaggedMessage += oneDictionary[message[i]];
-            i += oneDictionary[message[i]].length;
+        if (inGag && dictOneKeys.includes(message[i].toLowerCase())){
+            gaggedMessage += oneDictionary[message[i].toLowerCase()];
+            i += 1;
             continue;
         }
-        i += 1;
         gaggedMessage += message[i];
+        i += 1;
     }
     return gaggedMessage;
 }
 
 let oneDictionary = {
-    B : 'w',
-    C : 'kr',
-    D : 'r',
-    E : 'o',
-    I : 'a',
-    J : 'r',
-    L : 'r',
-    M : 'r',
-    N : 'r',
-    P : 'w',
-    Q : 'k',
-    R : 'rrr',
-    S : 'fff',
-    T : 'w',
-    U : 'uuu',
-    V : 'w',
-    X : 'r',
-    Z : 'r',
+    b : 'w',
+    c : 'kr',
+    d : 'r',
+    e : 'o',
+    i : 'a',
+    j : 'r',
+    l : 'r',
+    m : 'r',
+    n : 'r',
+    p : 'w',
+    q : 'k',
+    r : 'rrr',
+    s : 'fff',
+    t : 'w',
+    u : 'uuu',
+    v : 'w',
+    x : 'r',
+    z : 'r',
 };
 
 let twoDictionary = {
