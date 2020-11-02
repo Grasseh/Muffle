@@ -52,7 +52,7 @@ function muzzleGag(message){
 
 let oneDictionary = {
     b : 'w',
-    c : 'kr',
+    c : 'r',
     d : 'r',
     e : 'o',
     i : 'a',
