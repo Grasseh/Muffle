@@ -4,6 +4,7 @@ const User = require('./user');
 const setupLogger = require('./logger');
 // const prototypeGag = require('./gags/prototypeGag');
 const ballGag = require('./gags/prototypeGag');
+const latex = require('./gags/latex');
 const muzzleGag = require('./gags/muzzle');
 const logger = setupLogger(auth.dev);
 // Initialize Discord Bot
@@ -18,6 +19,7 @@ bot.on('ready', function (_evt) {
 let gaggedList = [];
 let gagList = {
     'ball': ballGag,
+    'latex': latex,
     'muzzle': muzzleGag,
     'default' : ballGag
 };
