@@ -3,10 +3,11 @@ function latexGag(message){
     let inDescription = false;
     let inOOC = 0;
     let latexIntensity = 20;
-    let latexIncrease = 10;
-    let latexCap = 80;
+    let latexIncrease = 1:s/^M$//0;
+    let latexWordLength = 4;
+    let latexCap = 90;
 
-    let split = /(\W)/; 
+    let split = /(\W)/;
     let words = message.split(split);
 
     words.forEach(word => {
@@ -20,13 +21,17 @@ function latexGag(message){
 
         let latexChance = Math.ceil(Math.random() * 100);
 
-        if (inOOC >= 2 || inDescription || word.length < 4 || latexChance > latexIntensity){
+        if (inOOC >= 2 || inDescription || word.length < latexWordLength || latexChance > latexIntensity){
             gaggedMessage += word;
             return;
         }
 
         if (latexIntensity < latexCap){
-            latexIntensity += latexIncrease;
+            latexIntensity += latexIncrease * (100 - latexIntensity) / 100;
+        } else {
+            if (latexChance > 50 && latexWordLength > 2) { //30 % Chance
+                latexWordLength -= 1;
+            }
         }
 
         gaggedMessage += `***${getLatexWord()}***`;
