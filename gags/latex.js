@@ -3,7 +3,7 @@ function latexGag(message){
     let inDescription = false;
     let inOOC = 0;
     let latexIntensity = 20;
-    let latexIncrease = 1:s/^M$//0;
+    let latexIncrease = 10;
     let latexWordLength = 4;
     let latexCap = 90;
 
