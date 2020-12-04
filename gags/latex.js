@@ -47,12 +47,20 @@ function getLatexWord() {
         'shiny',
         'glossy',
         'gloss',
+        'latex',
         'squeak',
         'squeaky',
         'tight',
         'shining',
         'latex',
         'squeaking',
+        'polished',
+        'gleaming',
+        'soft',
+        'latex',
+        'smooth',
+        'shiny',
+        'shiny',
         'latex'
     ]
     return latexWords[Math.floor(Math.random()*latexWords.length)];
