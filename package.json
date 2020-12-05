@@ -1,6 +1,6 @@
 {
     "name": "Muffle",
-    "version": "4.1.0",
+    "version": "4.1.1",
     "description": "Gag your friends!",
     "main": "bot.js",
     "author": "Steve Gagné",

@@ -51,7 +51,6 @@ function muzzleGag(message){
 }
 
 let oneDictionary = {
-    b : 'w',
     c : 'r',
     d : 'r',
     e : 'o',
