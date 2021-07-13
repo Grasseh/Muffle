@@ -85,7 +85,7 @@ function gagSomeone(gaggedList, channel, args){
     gaggedList.push(gaggedUser);
 
     let embed = new Discord.MessageEmbed()
-        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
+        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL())
         .setColor(0xffffff)
         .setDescription(`User gagged: ${gaggedUser.name} !`);
     channel.send(embed);
@@ -100,7 +100,7 @@ function ungagSomeone(list, channel, args){
     }
     gaggedList = removeFromList(ungaggedUser, list, channel.id);
     let embed = new Discord.MessageEmbed()
-        .setAuthor('Muffle Ungag!', bot.user.displayAvatarURL)
+        .setAuthor('Muffle Ungag!', bot.user.displayAvatarURL())
         .setColor(0xffffff)
         .setDescription(`User ungagged: ${ungaggedUser} !`);
     channel.send(embed);
@@ -110,7 +110,7 @@ function listGaggedUsers(gaggedList, channel){
     let channelGaggedList = gaggedList.filter(x => x.channel === channel.id).map(x => `${x.name} - ${x.gag}`);
     channelGaggedList.push('\u200B');
     let embed = new Discord.MessageEmbed()
-        .setAuthor('Muffle Gag List!', bot.user.displayAvatarURL)
+        .setAuthor('Muffle Gag List!', bot.user.displayAvatarURL())
         .setColor(0xffffff)
         .addField('Gagged Users in this channel', channelGaggedList.join('\n'));
     channel.send(embed);
@@ -144,7 +144,7 @@ function removeFromList(user, list, channel){
 
 function sendErrorEmbed(message, channel){
     let embed = new Discord.MessageEmbed()
-        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
+        .setAuthor('Muffle Gag!', bot.user.displayAvatarURL())
         .setColor(0xaa0000)
         .setDescription(`Error: ${message}!`);
     channel.send(embed);
@@ -178,7 +178,7 @@ function isAlwaysCommand(message){
 
 function help(channel){
     let embed = new Discord.MessageEmbed()
-        .setAuthor('Muffle Help!', bot.user.displayAvatarURL)
+        .setAuthor('Muffle Help!', bot.user.displayAvatarURL())
         .setColor(0xffffff)
         .setDescription('List of avalaible commands')
         .addField('`$gag <@DiscordUserName> [gagType]`', `Gags the user in the current channel with the provided gagType. \n List of available gagType : ${Object.keys(gagList)}`)
