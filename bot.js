@@ -85,7 +85,7 @@ function gagSomeone(gaggedList, channel, args){
 
     gaggedList.push(gaggedUser);
 
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
         .setDescription(`User gagged: ${gaggedUser.name} !`);
@@ -100,7 +100,7 @@ function ungagSomeone(list, channel, args){
         return;
     }
     gaggedList = removeFromList(ungaggedUser, list, channel.id);
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setAuthor('Muffle Ungag!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
         .setDescription(`User ungagged: ${ungaggedUser} !`);
@@ -110,7 +110,7 @@ function ungagSomeone(list, channel, args){
 function listGaggedUsers(gaggedList, channel){
     let channelGaggedList = gaggedList.filter(x => x.channel === channel.id).map(x => `${x.name} - ${x.gag}`);
     channelGaggedList.push('\u200B');
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setAuthor('Muffle Gag List!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
         .addField('Gagged Users in this channel', channelGaggedList.join('\n'));
@@ -132,8 +132,8 @@ async function gagMessage(user, msg, message, channel, userId){
 }
 
 async function buildGagEmbed(user, gaggedMessage, userId){
-    let discord_user = await bot.fetchUser(userId.replace('!', ''));
-    return new Discord.RichEmbed()
+    let discord_user = await bot.users.fetch(userId.replace('!', ''));
+    return new Discord.MessageEmbed()
         .setAuthor(discord_user.tag, discord_user.displayAvatarURL)
         .setColor(0x8af7bd)
         .setDescription(gaggedMessage);
@@ -144,7 +144,7 @@ function removeFromList(user, list, channel){
 }
 
 function sendErrorEmbed(message, channel){
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setAuthor('Muffle Gag!', bot.user.displayAvatarURL)
         .setColor(0xaa0000)
         .setDescription(`Error: ${message}!`);
@@ -178,7 +178,7 @@ function isAlwaysCommand(message){
 }
 
 function help(channel){
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
         .setAuthor('Muffle Help!', bot.user.displayAvatarURL)
         .setColor(0xffffff)
         .setDescription('List of avalaible commands')
