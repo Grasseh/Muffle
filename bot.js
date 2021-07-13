@@ -133,7 +133,7 @@ async function gagMessage(user, msg, message, channel, userId){
 async function buildGagEmbed(user, gaggedMessage, userId){
     let discord_user = await bot.users.fetch(userId.replace('!', ''));
     return new Discord.MessageEmbed()
-        .setAuthor(discord_user.tag, discord_user.displayAvatarURL)
+        .setAuthor(discord_user.tag, discord_user.displayAvatarURL())
         .setColor(0x8af7bd)
         .setDescription(gaggedMessage);
 }
