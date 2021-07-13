@@ -174,7 +174,7 @@ function isCommand(message){
 
 function isAlwaysCommand(message){
     let prefix = message.substring(0, 1);
-    return prefix === '$'|| prefix === '!';
+    return prefix === '$' || prefix === '!';
 }
 
 function help(channel){

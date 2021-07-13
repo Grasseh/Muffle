@@ -5,9 +5,9 @@
     "main": "bot.js",
     "author": "Steve Gagné",
     "dependencies": {
-        "discord.js": "^11.6.4",
-        "pm2": "^4.4.0",
-        "winston": "^3.2.1",
+        "discord.js": "^12.5.3",
+        "pm2": "^5.1.0",
+        "winston": "^3.3.3",
         "winston-daily-rotate-file": "^3.10.0"
     }
 }
