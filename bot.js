@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const auth = require('./auth.json');
 const User = require('./user');
 const setupLogger = require('./logger');
-// const prototypeGag = require('./gags/prototypeGag');
 const ballGag = require('./gags/prototypeGag');
 const latex = require('./gags/latex');
 const muzzleGag = require('./gags/muzzle');
